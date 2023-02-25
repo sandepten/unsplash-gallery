@@ -2,8 +2,43 @@ import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
 import backgroundPic from "../assets/background-pic.png";
 
-export default function Banner() {
+interface Props {
+  setImages: React.Dispatch<React.SetStateAction<never[]>>;
+  unsplash: any;
+  setError: React.Dispatch<React.SetStateAction<boolean>>;
+  setFirstSearch: React.Dispatch<React.SetStateAction<boolean>>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function Banner(props: Props) {
+  const {
+    setImages,
+    unsplash,
+    setError,
+    setFirstSearch,
+    setLoading,
+    setSearchTerm,
+  } = props;
   const [search, setSearch] = useState("");
+  const fetchImages = async (query: string) => {
+    setLoading(true);
+    setError(false);
+    setFirstSearch(true);
+    setSearchTerm(query);
+    try {
+      const data = await unsplash.search.getPhotos({
+        query,
+        perPage: 20,
+      });
+      setImages(data.response.results);
+      console.log("data:", data);
+    } catch (error) {
+      console.log("error:", error);
+      setError(true);
+    }
+    setLoading(false);
+  };
   return (
     <div className="relative">
       <img
@@ -11,7 +46,7 @@ export default function Banner() {
         alt="Backdrop mountains"
         className="absolute -z-10 h-[38vh] w-screen object-cover sm:h-[20rem]"
       />
-      <div className="items-center justify-center sm:flex sm:h-[20rem] sm:flex-col">
+      <div className="h-[38vh] items-center justify-center sm:flex sm:h-[20rem] sm:flex-col">
         <div className="pt-12 text-center sm:pt-0">
           <p className="mx-auto w-[80%] text-2xl font-semibold text-white sm:w-full md:text-3xl">
             Download High Quality Images by creators
@@ -22,7 +57,10 @@ export default function Banner() {
         </div>
         <div className="mt-6 flex justify-center">
           <div className="rounded-bl-md rounded-tl-md bg-white py-2 px-2.5 lg:py-3 lg:px-4">
-            <MagnifyingGlassIcon className="w-5" />
+            <MagnifyingGlassIcon
+              className="w-5"
+              onClick={() => fetchImages(search)}
+            />
           </div>
           <input
             type="text"

@@ -9,28 +9,85 @@ import React, { useState } from "react";
 interface Props {
   darkMode: boolean;
   setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+  setImages: React.Dispatch<React.SetStateAction<never[]>>;
+  unsplash: any;
+  setError: React.Dispatch<React.SetStateAction<boolean>>;
+  setFirstSearch: React.Dispatch<React.SetStateAction<boolean>>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+  fetchRandomImages: () => void;
 }
 
 export default function Navbar(props: Props) {
-  const { darkMode, setDarkMode } = props;
+  const {
+    darkMode,
+    setDarkMode,
+    setImages,
+    unsplash,
+    setError,
+    setFirstSearch,
+    setLoading,
+    setSearchTerm,
+    fetchRandomImages,
+  } = props;
   const [search, setSearch] = useState("");
+  const fetchImages = async (query: string) => {
+    setLoading(true);
+    setError(false);
+    setFirstSearch(true);
+    setSearchTerm(query);
+    try {
+      const data = await unsplash.search.getPhotos({
+        query,
+        perPage: 20,
+      });
+      setImages(data.response.results);
+      console.log("data:", data.response);
+    } catch (error) {
+      console.log("error:", error);
+      setError(true);
+    }
+    setLoading(false);
+  };
   return (
     <>
       {/* Mobile Navbar */}
       <nav className="flex items-center justify-between p-4 lg:hidden">
-        <p className="font-mono text-xl font-bold">Image Gallery</p>
+        <p
+          className="font-mono text-xl font-bold"
+          onClick={() => {
+            setFirstSearch(false);
+            fetchRandomImages();
+          }}
+        >
+          Image Gallery
+        </p>
         <div className="flex gap-3">
-          <MagnifyingGlassIcon className="h-6 w-6" />
+          <MagnifyingGlassIcon
+            className="h-6 w-6"
+            onClick={() => fetchImages(search)}
+          />
           <Bars3Icon className="h-6 w-6" />
         </div>
       </nav>
       {/* Desktop Navbar */}
       <nav className="hidden items-center justify-around py-4 px-8 lg:flex">
-        <p className="font-mono text-xl font-bold">Image Gallery</p>
+        <p
+          className="font-mono text-xl font-bold"
+          onClick={() => {
+            setFirstSearch(false);
+            fetchRandomImages();
+          }}
+        >
+          Image Gallery
+        </p>
         <div className="flex items-center gap-5">
           <div className="flex justify-center">
             <div className="rounded-bl-md rounded-tl-md bg-[#ECECEC] py-2 px-2.5">
-              <MagnifyingGlassIcon className="w-5 text-[#A7A7A7]" />
+              <MagnifyingGlassIcon
+                className="w-5 text-[#A7A7A7]"
+                onClick={() => fetchImages(search)}
+              />
             </div>
             <input
               type="text"
