@@ -18,14 +18,14 @@ export default function ImagesShowcase(props: Props) {
   };
   if (loading) {
     return (
-      <p className="mx-auto flex h-screen w-[60vh] items-center justify-center text-xl font-semibold">
+      <p className="mx-auto flex h-screen w-screen justify-center pt-36 text-xl font-semibold dark:bg-gray-800 dark:text-white">
         Loading...
       </p>
     );
   }
   if (error) {
     return (
-      <p className="mx-auto flex h-screen w-[60vh] items-center justify-center text-xl font-semibold">
+      <p className="mx-auto flex h-screen w-screen justify-center pt-36 text-xl font-semibold dark:bg-gray-800 dark:text-white">
         Something went wrong...
       </p>
     );

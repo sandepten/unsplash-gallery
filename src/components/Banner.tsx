@@ -39,14 +39,19 @@ export default function Banner(props: Props) {
     }
     setLoading(false);
   };
+  const handleKeyDown = (e: any) => {
+    if (e.key === "Enter") {
+      fetchImages(search);
+    }
+  };
   return (
     <div className="relative">
       <img
         src={backgroundPic}
         alt="Backdrop mountains"
-        className="absolute -z-10 h-[38vh] w-screen object-cover sm:h-[20rem]"
+        className="h-[38vh] w-screen object-cover sm:h-[20rem]"
       />
-      <div className="h-[38vh] items-center justify-center sm:flex sm:h-[20rem] sm:flex-col">
+      <div className="absolute left-1/2 top-10 z-10 h-[38vh] w-[90%] -translate-x-1/2 sm:top-1/4 sm:h-[20rem]">
         <div className="pt-12 text-center sm:pt-0">
           <p className="mx-auto w-[80%] text-2xl font-semibold text-white sm:w-full md:text-3xl">
             Download High Quality Images by creators
@@ -68,12 +73,16 @@ export default function Banner(props: Props) {
             placeholder="Search high resolution Images"
             id="search"
             value={search}
+            onKeyDown={handleKeyDown}
             onChange={(e) => setSearch(e.target.value)}
-            className="border-none bg-white text-base font-medium text-gray-500 placeholder:text-xs focus:outline-none sm:w-full md:w-72 lg:w-96"
+            className="border-none bg-white text-sm font-medium text-gray-500 placeholder:text-xs focus:outline-none sm:w-full md:w-72 lg:w-96"
           />
           <div className="rounded-br-md rounded-tr-md bg-white py-1.5 px-2.5 lg:py-3 lg:px-4">
             {search.length ? (
-              <XMarkIcon className="mt-[2px] w-5" />
+              <XMarkIcon
+                className="mt-[2px] w-5"
+                onClick={() => setSearch("")}
+              />
             ) : (
               <div className="w-5"></div>
             )}

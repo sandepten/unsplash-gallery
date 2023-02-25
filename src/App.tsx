@@ -29,11 +29,32 @@ function App() {
     }
     setLoading(false);
   };
+  const handleDarkMode = () => {
+    localStorage.setItem("darkMode", JSON.stringify(darkMode));
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  };
+  useEffect(() => {
+    handleDarkMode();
+  }, [darkMode]);
   useEffect(() => {
     fetchRandomImages();
+    const darkLocalStorage = localStorage.getItem("darkMode");
+    console.log("darkLocalStorage:", darkLocalStorage);
+    if (darkLocalStorage === null) {
+      localStorage.setItem("darkMode", JSON.stringify(false));
+    } else {
+      const darkModeEnabled = darkLocalStorage;
+      if (darkModeEnabled) {
+        setDarkMode(true);
+      }
+    }
   }, []);
   return (
-    <main className="pb-[5vh] font-sans">
+    <main className="pb-[5vh] font-sans dark:bg-gray-800">
       <Navbar
         darkMode={darkMode}
         setDarkMode={setDarkMode}
