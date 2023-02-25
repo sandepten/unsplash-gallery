@@ -20,7 +20,7 @@ function App() {
     setSearchTerm("");
     try {
       const data = await unsplash.photos.getRandom({
-        count: 20,
+        count: 21,
       });
       setImages(data.response);
       console.log("data:", data);

@@ -29,7 +29,7 @@ export default function Banner(props: Props) {
     try {
       const data = await unsplash.search.getPhotos({
         query,
-        perPage: 20,
+        perPage: 21,
       });
       setImages(data.response.results);
       console.log("data:", data);
