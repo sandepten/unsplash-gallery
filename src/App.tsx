@@ -19,7 +19,7 @@ function App() {
     setError(false);
     setSearchTerm("");
     try {
-      const data = await unsplash.photos.getRandom({
+      const data: any = await unsplash.photos.getRandom({
         count: 21,
       });
       setImages(data.response);
