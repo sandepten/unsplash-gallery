@@ -42,7 +42,7 @@ export default function ImagesShowcase(props: Props) {
         ></div>
       )}
       <div className="px-4 pt-3 md:px-6 lg:px-12 xl:mx-auto xl:w-[85%] xl:px-0 2xl:w-[80%]">
-        <p className="pb-5 text-2xl font-semibold sm:pb-8 sm:text-3xl">
+        <p className="pb-5 text-2xl font-semibold dark:text-white sm:pb-8 sm:text-3xl">
           {!!searchTerm?.length ? searchTerm : ""}
         </p>
         <div className="grid grid-cols-2 gap-2.5 sm:gap-4 md:grid-cols-3 md:gap-6 lg:gap-8">

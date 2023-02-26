@@ -43,14 +43,8 @@ function App() {
   useEffect(() => {
     fetchRandomImages();
     const darkLocalStorage = localStorage.getItem("darkMode");
-    console.log("darkLocalStorage:", darkLocalStorage);
-    if (darkLocalStorage === null) {
-      localStorage.setItem("darkMode", JSON.stringify(false));
-    } else {
-      const darkModeEnabled = darkLocalStorage;
-      if (darkModeEnabled) {
-        setDarkMode(true);
-      }
+    if (darkLocalStorage) {
+      setDarkMode(JSON.parse(darkLocalStorage));
     }
   }, []);
   return (
