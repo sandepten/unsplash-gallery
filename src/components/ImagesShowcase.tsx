@@ -48,7 +48,11 @@ export default function ImagesShowcase(props: Props) {
         <div className="grid grid-cols-2 gap-2.5 sm:gap-4 md:grid-cols-3 md:gap-6 lg:gap-8">
           {!!images?.length &&
             images.map((image) => (
-              <div key={image.id} onClick={() => handleImageClick(image)}>
+              <div
+                key={image.id}
+                className="cursor-pointer"
+                onClick={() => handleImageClick(image)}
+              >
                 <ImageComponent
                   imageUrl={image.urls.regular}
                   imageAlt={image.alt_description}
